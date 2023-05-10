@@ -1,7 +1,7 @@
 const Home = () => {
   return (
     <section className="bg-gray-900 h-screen py-24">
-      <div className="text-center">
+      <div className="text-center px-5">
         <h1 className="text-6xl   font-semibold text-white mb-4">
           Welcome to CodeBits !
         </h1>
