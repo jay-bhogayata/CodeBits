@@ -2,13 +2,16 @@
 
 import { useSession, signIn, signOut, getProviders } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 const Nav = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
+  // get session from next-auth
   const { data: session } = useSession();
+
+  const [isOpen, setIsOpen] = useState(false);
   const [providers, setProviders] = useState(null);
 
   useEffect(() => {
@@ -24,12 +27,13 @@ const Nav = () => {
       <div className="px-4 md:px-16 lg:px-32">
         <div className="flex h-16 items-center justify-between ">
           <div className="flex items-center ">
-            <a href="#" className="flex-shrink-0 ">
+            <a href="/" className="flex-shrink-0 ">
               <h1 className="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-3xl font-semibold  font-mono text-transparent">
                 {" "}
                 CodeBits
               </h1>
             </a>
+            {/* search block */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 <form className="flex items-center">
@@ -71,7 +75,9 @@ const Nav = () => {
                 <button
                   className="text-white text-xl font-normal mr-5 rounded-md 
                 py-1 px-8 bg-red-600  hidden md:block"
-                  onClick={() => signOut()}
+                  onClick={() => {
+                    signOut();
+                  }}
                 >
                   logout
                 </button>
@@ -141,6 +147,7 @@ const Nav = () => {
         </div>
       </div>
 
+      {/* mobile nav */}
       <div className={isOpen ? "md:hidden" : "hidden"}>
         <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
           <form className="flex items-center">

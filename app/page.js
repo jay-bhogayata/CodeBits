@@ -1,8 +1,9 @@
 "use client";
-
 import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   const user = session?.user;
   return (
@@ -18,7 +19,7 @@ const Home = () => {
           <button
             type="button"
             className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 text-lg"
-            onClick={() => signIn()}
+            onClick={() => router.push("/create-snippets")}
           >
             create snippets
           </button>
