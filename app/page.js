@@ -1,15 +1,30 @@
 "use client";
+
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import SnippetCard from "@components/SnippetCard";
 import Provider from "@components/Provider";
+
 const Home = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const user = session?.user;
+
+  const [snippet, setSnippet] = useState([]);
+
+  useEffect(() => {
+    const fetchSnippet = async () => {
+      const response = await fetch("/api/snippet", {});
+      const data = await response.json();
+      setSnippet(data);
+    };
+    fetchSnippet();
+  }, []);
+
   return (
     <Provider session={session}>
-      <section className="bg-gray-900 h-screen py-24">
+      <section className="bg-gray-900 flex flex-col min-h-screen py-24 ">
         <div className="text-center px-5">
           <h1 className="text-6xl   font-semibold text-white mb-4">
             Welcome to CodeBits !
@@ -35,7 +50,9 @@ const Home = () => {
             </button>
           )}
         </div>
-        <SnippetCard />
+        <div className="lg:px-44 px-10">
+          <SnippetCard data={snippet} />
+        </div>
       </section>
     </Provider>
   );

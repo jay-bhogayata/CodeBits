@@ -2,6 +2,7 @@
 
 import { useSession, signIn, signOut, getProviders } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -81,13 +82,13 @@ const Nav = () => {
                 >
                   logout
                 </button>
-
                 <Image
                   src={session?.user?.image}
                   height={30}
                   width={30}
                   alt="user-img"
-                  onClick={() => setIsOpen(!isOpen)}
+                  onClick={() => router.push("/profile")}
+                  className="cursor-pointer hidden md:block"
                 />
               </div>
             ) : (
@@ -99,49 +100,45 @@ const Nav = () => {
               </button>
             )}
             <div className="-mr-2 flex md:hidden">
-              {session?.user ? (
-                ""
-              ) : (
-                <button
-                  type="button"
-                  className="inline-flex items-center justify-center rounded-md bg-gray-900 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                  aria-expanded="false"
-                  onClick={() => setIsOpen(!isOpen)}
-                >
-                  <span className="sr-only">Open main menu</span>
+              <button
+                type="button"
+                className="inline-flex items-center justify-center rounded-md bg-gray-900 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                aria-expanded="false"
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                <span className="sr-only">Open main menu</span>
 
-                  <svg
-                    className="block h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                  <svg
-                    className="hidden h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              )}
+                <svg
+                  className="block h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+                <svg
+                  className="hidden h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -180,12 +177,29 @@ const Nav = () => {
             </div>
           </form>
           {session?.user ? (
-            <button
-              className="bg-red-600 focus:outline-none text-white  hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg  w-full    py-1  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 text-lg"
-              onClick={() => signOut()}
-            >
-              logout
-            </button>
+            <div>
+              <div className="my-2">
+                <Link
+                  href={"/profile"}
+                  className="flex text-white hover:text-gray-300 font-medium space-x-4 items-center"
+                >
+                  <Image
+                    src={session?.user?.image}
+                    width={30}
+                    height={30}
+                    alt="user-profile"
+                    onClick={() => router.push("/profile")}
+                  />
+                  <p>{session?.user?.name}</p>
+                </Link>
+              </div>
+              <button
+                className="bg-red-600 focus:outline-none text-white  hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg  w-full    py-1  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 text-lg"
+                onClick={() => signOut()}
+              >
+                logout
+              </button>
+            </div>
           ) : (
             <button
               className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  w-full    py-1  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 text-lg"

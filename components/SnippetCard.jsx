@@ -3,36 +3,36 @@ import { useEffect, useState } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneDark } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
-const SnippetCard = () => {
-  const [snippet, setSnippet] = useState([]);
-
-  useEffect(() => {
-    const fetchSnippet = async () => {
-      const response = await fetch("/api/snippet", {});
-      const data = await response.json();
-      setSnippet(data);
-    };
-    fetchSnippet();
-  }, []);
-
+const SnippetCard = ({ data }) => {
+  const handleCopy = (data) => {
+    navigator.clipboard.writeText(data);
+  };
   return (
-    <section className="bg-gray-900 flex flex-col items-center ">
-      {snippet.map((s) => (
-        <div key={s.name} className="w-full my-5 px-10 lg:w-1/2">
-          <div className="flex space-x-10 my-5 items-center">
-            <Image
-              src={s?.author?.image}
-              width={30}
-              height={30}
-              alt="user-img"
+    <section className="bg-gray-900 flex flex-col">
+      {data.map((s) => (
+        <div key={s.name} className="w-full my-5 border-2 p-5 rounded-lg">
+          <div className="flex space-x-10 mx-2 my-5 items-center justify-between">
+            <div className="flex space-x-5 justify-center items-center ">
+              <Image
+                src={s?.author?.image}
+                width={30}
+                height={30}
+                alt="user-img"
+              />
+              <p className="text-white text-xl">{s.name}</p>
+            </div>
+            <img
+              src="/copy.svg"
+              alt=""
+              onClick={() => handleCopy(s.code)}
+              className="cursor-pointer border rounded-lg p-2"
             />
-            <p className="text-white text-xl">{s.name}</p>
           </div>
           <SyntaxHighlighter
             language="auto"
             style={atomOneDark}
             showLineNumbers={true}
-            className=""
+            className="rounded-lg"
           >
             {s.code}
           </SyntaxHighlighter>
