@@ -1,5 +1,6 @@
 import Provider from "@components/Provider";
 import "@styles/globals.css";
+import Nav from "@components/Nav";
 
 export const metadata = {
   icons: {
@@ -16,6 +17,7 @@ const RootLayout = ({ children }) => {
         <main>
           <Provider>
             {/* navbar */}
+            <Nav />
             {children}
           </Provider>
         </main>
