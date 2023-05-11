@@ -2,25 +2,13 @@
 
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
-import SnippetCard from "@components/SnippetCard";
 import Provider from "@components/Provider";
+import Feed from "@components/Feed";
 
 const Home = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const user = session?.user;
-
-  const [snippet, setSnippet] = useState([]);
-
-  useEffect(() => {
-    const fetchSnippet = async () => {
-      const response = await fetch("/api/snippet", {});
-      const data = await response.json();
-      setSnippet(data);
-    };
-    fetchSnippet();
-  }, []);
 
   return (
     <Provider session={session}>
@@ -50,9 +38,7 @@ const Home = () => {
             </button>
           )}
         </div>
-        <div className="lg:px-44 px-10">
-          <SnippetCard data={snippet} />
-        </div>
+        <Feed />
       </section>
     </Provider>
   );
