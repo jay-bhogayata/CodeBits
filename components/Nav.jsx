@@ -15,6 +15,10 @@ const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [providers, setProviders] = useState(null);
 
+  const handleLogout = () => {
+    signOut();
+  };
+
   useEffect(() => {
     const getProviderList = async () => {
       const resp = await getProviders();
@@ -76,9 +80,7 @@ const Nav = () => {
                 <button
                   className="text-white text-xl font-normal mr-5 rounded-md 
                 py-1 px-8 bg-red-600  hidden md:block"
-                  onClick={() => {
-                    signOut();
-                  }}
+                  onClick={handleLogout}
                 >
                   logout
                 </button>
@@ -195,7 +197,7 @@ const Nav = () => {
               </div>
               <button
                 className="bg-red-600 focus:outline-none text-white  hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg  w-full    py-1  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 text-lg"
-                onClick={() => signOut()}
+                onClick={handleLogout}
               >
                 logout
               </button>

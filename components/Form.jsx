@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 const Form = ({ type, snippet, setSnippet, submitting, handleSubmit }) => {
   return (
     <section className="w-full flex flex-col items-center ">
@@ -33,13 +35,21 @@ const Form = ({ type, snippet, setSnippet, submitting, handleSubmit }) => {
           placeholder="write your code here"
           rows="10"
         ></textarea>
-        <button
-          type="submit"
-          className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-8   py-1  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 text-lg"
-          disabled={submitting}
-        >
-          create
-        </button>
+        <div className="flex flex-wrap justify-between">
+          <Link
+            href="/"
+            className="text-white text-xl font-normal rounded-md py-1 px-4 bg-red-600"
+          >
+            cancel
+          </Link>
+          <button
+            type="submit"
+            className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg  px-8   py-1  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 text-lg"
+            disabled={submitting}
+          >
+            {submitting ? `${type}...` : type}
+          </button>
+        </div>
       </form>
     </section>
   );

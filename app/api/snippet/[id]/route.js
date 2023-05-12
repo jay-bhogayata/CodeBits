@@ -23,3 +23,25 @@ export const DELETE = async (req, { params }) => {
     return new Response("failed to delete the snippet", { status: 500 });
   }
 };
+
+export const PATCH = async (request, { params }) => {
+  const { name, desc, code } = await request.json();
+  console.log(name, desc, code);
+  try {
+    await connectToDB();
+    const existingSnippet = await Snippet.findById(params.id);
+    if (!existingSnippet) {
+      return new Response("Snippet not found", { status: 404 });
+    }
+    existingSnippet.name = name;
+    existingSnippet.code = code;
+    existingSnippet.description = desc;
+
+    await existingSnippet.save();
+
+    return new Response(JSON.stringify(existingSnippet), { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return new Response("failed to update the snippet");
+  }
+};

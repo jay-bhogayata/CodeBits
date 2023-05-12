@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneDark } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
-const SnippetCard = ({ data, id, handleDelete }) => {
+const SnippetCard = ({ data, id, handleDelete, handleEdit }) => {
   const handleCopy = (data) => {
     navigator.clipboard.writeText(data);
   };
@@ -22,14 +22,25 @@ const SnippetCard = ({ data, id, handleDelete }) => {
           </div>
           <div className="flex  space-x-5 ">
             {data.author._id === id && (
-              <img
-                src="/del.svg"
-                width={30}
-                height={30}
-                alt="del-icon"
-                className="cursor-pointer"
-                onClick={handleDelete}
-              />
+              <>
+                <img
+                  src="/edit.svg"
+                  width={30}
+                  height={30}
+                  alt="del-icon"
+                  className="cursor-pointer"
+                  onClick={handleEdit}
+                />
+
+                <img
+                  src="/del.svg"
+                  width={30}
+                  height={30}
+                  alt="del-icon"
+                  className="cursor-pointer"
+                  onClick={handleDelete}
+                />
+              </>
             )}
             <img
               src="/copy.svg"
